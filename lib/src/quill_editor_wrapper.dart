@@ -8,20 +8,14 @@ import 'package:webviewx_plus/webviewx_plus.dart';
 class QuillHtmlEditor extends StatefulWidget {
   ///[QuillHtmlEditor] widget to show the quill editor,
   ///pass the controller to access the editor methods
-  QuillHtmlEditor(
-      {this.text,
-      required this.controller,
-      required this.height,
-      this.isEnabled = true,
-      this.hintText = 'Description'})
-      : super(key: controller._editorKey);
+  QuillHtmlEditor({this.text, required this.controller, this.height, this.isEnabled = true, this.hintText = 'Description'}) : super(key: controller._editorKey);
 
   /// [text] to set initial text to the editor, please use text
   /// We can also use the setText method for the same
   final String? text;
 
   /// [height] to define the height of the editor
-  final double height;
+  final double? height;
 
   /// [hintText] is a placeholder, by default, the hint will be 'Description'
   /// We can override the placeholder text by passing hintText to the editor
@@ -64,23 +58,16 @@ class QuillHtmlEditorState extends State<QuillHtmlEditor> {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
-      double screenHeight = widget.height;
-      _initialContent =
-          _getQuillPage(height: screenHeight, width: constraints.maxWidth);
+      double screenHeight = widget.height ?? constraints.maxHeight;
+      _initialContent = _getQuillPage(height: screenHeight, width: constraints.maxWidth);
 
       return Center(
-        child: _buildEditorView(
-            context: context,
-            height: screenHeight,
-            width: constraints.maxWidth),
+        child: _buildEditorView(context: context, height: screenHeight, width: constraints.maxWidth),
       );
     });
   }
 
-  Widget _buildEditorView(
-      {required BuildContext context,
-      required double height,
-      required double width}) {
+  Widget _buildEditorView({required BuildContext context, required double height, required double width}) {
     _initialContent = _getQuillPage(height: height, width: width);
 
     return WebViewX(
@@ -93,7 +80,7 @@ class QuillHtmlEditorState extends State<QuillHtmlEditor> {
       onWebViewCreated: (controller) => _webviewController = controller,
       onPageStarted: (src) {},
       onPageFinished: (src) {
-        widget.controller.enableEditor(isEnabled);
+        // widget.controller.enableEditor(isEnabled);
         if (widget.text != null) {
           _setHtmlTextToEditor(htmlText: widget.text!);
         }
@@ -104,8 +91,7 @@ class QuillHtmlEditorState extends State<QuillHtmlEditor> {
             callBack: (map) {
               try {
                 if (widget.controller._toolBarKey != null) {
-                  widget.controller._toolBarKey!.currentState
-                      ?.updateToolBarFormat(jsonDecode(map));
+                  widget.controller._toolBarKey!.currentState?.updateToolBarFormat(jsonDecode(map));
                 }
               } catch (e) {
                 debugPrint(e.toString());
@@ -138,12 +124,16 @@ class QuillHtmlEditorState extends State<QuillHtmlEditor> {
 
   /// a private method to check if editor has focus
   Future<dynamic> _setSelectionRange(int index, int length) async {
-    return await _webviewController
-        .callJsMethod("setSelection", [index, length]);
+    return await _webviewController.callJsMethod("setSelection", [index, length]);
   }
 
   /// a private method to set the Html text to the editor
   Future _setHtmlTextToEditor({required String htmlText}) async {
+    // try {
+    //   await _webviewController.callJsMethod("setHtmlText", [htmlText]);
+    // } catch (e) {
+    //   debugPrint(e.toString());
+    // }
     await _webviewController.callJsMethod("setHtmlText", [htmlText]);
   }
 
@@ -449,14 +439,22 @@ class QuillHtmlEditorState extends State<QuillHtmlEditor> {
    
     function setSelection (index, length) 
       {
-      setTimeout(() => quilleditor.setSelection(index, length), 1);
-      return '';
+        setTimeout(() => quilleditor.setSelection(index, length), 1);
+        return '';
       } 
    
-      function setHtmlText(htmlString) 
+    function setHtmlText(htmlString) 
       {
-        const delta = quilleditor.clipboard.convert(htmlString);
-        quilleditor.setContents(delta, 'silent');
+        try {
+          // console.log(htmlString);
+          const delta = quilleditor.clipboard.convert(htmlString);
+          // console.log(JSON.stringify(delta, null, 2));
+          quilleditor.setContents(delta, 'silent');
+        } catch(e) {
+          // Getting a weird TypeError: Cannot read properties of null (reading 'index')
+          // We'll supress it until we can figure out why
+          // console.log('Error: ' + e);
+        }
         return '';
       } 
       
