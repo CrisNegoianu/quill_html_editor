@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs
+
 import 'dart:core';
 
 import 'package:flutter/material.dart';
@@ -33,10 +35,8 @@ class ToolBar extends StatefulWidget {
 class ToolBarState extends State<ToolBar> {
   List<ToolBarItem> _toolbarList = [];
   Map<String, dynamic> _formatMap = {};
-  final GlobalKey<ElTooltipState> _fontBgColorKey =
-      GlobalKey<ElTooltipState>(debugLabel: 'fontBgColorKey');
-  final GlobalKey<ElTooltipState> _fontColorKey =
-      GlobalKey<ElTooltipState>(debugLabel: 'fontColorKey');
+  final GlobalKey<ElTooltipState> _fontBgColorKey = GlobalKey<ElTooltipState>(debugLabel: 'fontBgColorKey');
+  final GlobalKey<ElTooltipState> _fontColorKey = GlobalKey<ElTooltipState>(debugLabel: 'fontColorKey');
   @override
   void initState() {
     if (widget.toolBarConfig == null) {
@@ -215,10 +215,8 @@ class ToolBarState extends State<ToolBar> {
             } else {
               toolbarItem.isActive = !toolbarItem.isActive;
             }
-            Map<String, dynamic> getFormat =
-                _getFormatByStyle(toolbarItem.style, toolbarItem.isActive);
-            widget.controller.setFormat(
-                format: getFormat['format'], value: getFormat['value']);
+            Map<String, dynamic> getFormat = _getFormatByStyle(toolbarItem.style, toolbarItem.isActive);
+            widget.controller.setFormat(format: getFormat['format'], value: getFormat['value']);
 
             if (_formatMap['direction'] == 'rtl') {
               widget.controller.setFormat(format: 'align', value: 'right');
@@ -311,8 +309,7 @@ class ToolBarState extends State<ToolBar> {
               ],
               onChanged: (value) {
                 _formatMap['size'] = value;
-                widget.controller.setFormat(
-                    format: 'size', value: value == 'normal' ? '' : value);
+                widget.controller.setFormat(format: 'size', value: value == 'normal' ? '' : value);
                 setState(() {});
               }),
         ),
@@ -320,18 +317,13 @@ class ToolBarState extends State<ToolBar> {
     );
   }
 
-  DropdownMenuItem _fontSizeItem(
-      {required String type, required double fontSize}) {
+  DropdownMenuItem _fontSizeItem({required String type, required double fontSize}) {
     return DropdownMenuItem(
         value: type.toLowerCase(),
         child: WebViewAware(
           child: Text(type,
-              style: TextStyle(
-                  fontSize: fontSize,
-                  color: _formatMap['size'] == type.toLowerCase()
-                      ? Colors.blue
-                      : Colors.black87,
-                  fontWeight: FontWeight.bold)),
+              style:
+                  TextStyle(fontSize: fontSize, color: _formatMap['size'] == type.toLowerCase() ? Colors.blue : Colors.black87, fontWeight: FontWeight.bold)),
         ));
   }
 
@@ -340,12 +332,7 @@ class ToolBarState extends State<ToolBar> {
   }) {
     return SizedBox(
       width: 55,
-      child: Text(type,
-          style: TextStyle(
-              fontSize: 14,
-              color:
-                  type.toLowerCase() != 'normal' ? Colors.blue : Colors.black87,
-              fontWeight: FontWeight.bold)),
+      child: Text(type, style: TextStyle(fontSize: 14, color: type.toLowerCase() != 'normal' ? Colors.blue : Colors.black87, fontWeight: FontWeight.bold)),
     );
   }
 
@@ -359,9 +346,7 @@ class ToolBarState extends State<ToolBar> {
             focusColor: Colors.transparent,
             alignment: Alignment.bottomCenter,
             isDense: true,
-            value: (_formatMap['align'] == '' || _formatMap['align'] == null)
-                ? 'left'
-                : _formatMap['align'],
+            value: (_formatMap['align'] == '' || _formatMap['align'] == null) ? 'left' : _formatMap['align'],
             items: [
               _getAlignDDItem('left'),
               _getAlignDDItem('center'),
@@ -370,8 +355,7 @@ class ToolBarState extends State<ToolBar> {
             ],
             onChanged: (value) {
               _formatMap['align'] = value == 'left' ? '' : value;
-              widget.controller
-                  .setFormat(format: 'align', value: _formatMap['align']);
+              widget.controller.setFormat(format: 'align', value: _formatMap['align']);
 
               setState(() {});
             }),
@@ -411,8 +395,7 @@ class ToolBarState extends State<ToolBar> {
         onColorPicked: (color) {
           _formatMap['color'] = color;
           _toolbarList[i].isActive = true;
-          widget.controller
-              .setFormat(format: 'color', value: _formatMap['color']);
+          widget.controller.setFormat(format: 'color', value: _formatMap['color']);
           setState(() {});
           if (_fontColorKey.currentState != null) {
             _fontColorKey.currentState!.hideOverlay();
@@ -430,16 +413,10 @@ class ToolBarState extends State<ToolBar> {
             Text(
               'A',
               maxLines: 1,
-              style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color:
-                      _formatMap['color'] != null ? Colors.blue : Colors.black,
-                  fontSize: 14),
+              style: TextStyle(fontWeight: FontWeight.w600, color: _formatMap['color'] != null ? Colors.blue : Colors.black, fontSize: 14),
             ),
             Container(
-              color: _formatMap['color'] != null
-                  ? HexColor.fromHex(_formatMap['color'])
-                  : Colors.black,
+              color: _formatMap['color'] != null ? HexColor.fromHex(_formatMap['color']) : Colors.black,
               height: 3,
               width: 18,
             ),
@@ -462,8 +439,7 @@ class ToolBarState extends State<ToolBar> {
         onColorPicked: (color) {
           _formatMap['background'] = color;
           _toolbarList[i].isActive = true;
-          widget.controller
-              .setFormat(format: 'background', value: _formatMap['background']);
+          widget.controller.setFormat(format: 'background', value: _formatMap['background']);
           setState(() {});
           if (_fontBgColorKey.currentState != null) {
             _fontBgColorKey.currentState!.hideOverlay();
@@ -474,21 +450,14 @@ class ToolBarState extends State<ToolBar> {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           border: Border.all(width: 0.1),
-          color: _formatMap['background'] != null
-              ? HexColor.fromHex(_formatMap['background'])
-              : Colors.white,
+          color: _formatMap['background'] != null ? HexColor.fromHex(_formatMap['background']) : Colors.white,
         ),
         height: 22,
         width: 22,
         child: Text(
           'A',
           maxLines: 1,
-          style: TextStyle(
-              fontWeight: FontWeight.w600,
-              color: _formatMap['background'] != null
-                  ? Colors.white
-                  : Colors.black,
-              fontSize: 16),
+          style: TextStyle(fontWeight: FontWeight.w600, color: _formatMap['background'] != null ? Colors.white : Colors.black, fontSize: 16),
         ),
       ),
     );
@@ -593,10 +562,7 @@ class ToolBarItem extends StatelessWidget {
           child: Text(
             text,
             maxLines: 1,
-            style: TextStyle(
-                fontWeight: FontWeight.w600,
-                color: isActive ? Colors.blue : Colors.black87,
-                fontSize: 14),
+            style: TextStyle(fontWeight: FontWeight.w600, color: isActive ? Colors.blue : Colors.black87, fontSize: 14),
           ),
         ),
       ),

@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs
+
 import 'dart:async';
 import 'dart:convert';
 
@@ -23,11 +25,8 @@ class ImageSelector {
       _paths = (await FilePicker.platform.pickFiles(
         type: _pickingType,
         allowMultiple: false,
-        onFileLoading: (FilePickerStatus status) =>
-            debugPrint(status.toString()),
-        allowedExtensions: (_extension?.isNotEmpty ?? false)
-            ? _extension?.replaceAll(' ', '').split(',')
-            : null,
+        onFileLoading: (FilePickerStatus status) => debugPrint(status.toString()),
+        allowedExtensions: (_extension?.isNotEmpty ?? false) ? _extension?.replaceAll(' ', '').split(',') : null,
       ))
           ?.files;
       print(_paths);
@@ -42,8 +41,7 @@ class ImageSelector {
         }
         if (bytes != null) {
           String base64String = base64Encode(bytes);
-          onImagePicked(
-              'data:image/${_paths!.single.extension};base64,$base64String');
+          onImagePicked('data:image/${_paths!.single.extension};base64,$base64String');
         }
       }
     } on PlatformException catch (e) {
@@ -59,5 +57,4 @@ class ImageSelector {
 }
 
 ///[OnPickImageCallback] typedef for onPickImageCallback
-typedef OnPickImageCallback = void Function(
-    double? maxWidth, double? maxHeight, int? quality);
+typedef OnPickImageCallback = void Function(double? maxWidth, double? maxHeight, int? quality);

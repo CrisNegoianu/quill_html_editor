@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
@@ -24,12 +26,7 @@ class InputUrlWidget extends StatefulWidget {
   final bool isActive;
 
   ///[InputUrlWidget] constructor of input url widget to capture, video/hyperlink urls
-  const InputUrlWidget(
-      {super.key,
-      required this.onSubmit,
-      required this.type,
-      required this.controller,
-      required this.isActive});
+  const InputUrlWidget({super.key, required this.onSubmit, required this.type, required this.controller, required this.isActive});
   @override
   State<StatefulWidget> createState() {
     return _InputUrlWidgetState();
@@ -76,8 +73,7 @@ class _InputUrlWidgetState extends State<InputUrlWidget> {
           }
         },
         key: _toolTipKey,
-        content: _getTextFieldBytType(
-            true, onDoneLastClicked, onCloseLastClicked, selectionMap, context),
+        content: _getTextFieldBytType(true, onDoneLastClicked, onCloseLastClicked, selectionMap, context),
         child: _getIcon(widget.type),
       );
     } else {
@@ -89,8 +85,7 @@ class _InputUrlWidgetState extends State<InputUrlWidget> {
           showBottomSheet(
               context: context,
               builder: (context) {
-                return _getTextFieldBytType(false, onDoneLastClicked,
-                    onCloseLastClicked, selectionMap, context);
+                return _getTextFieldBytType(false, onDoneLastClicked, onCloseLastClicked, selectionMap, context);
               });
         },
         child: _getIcon(widget.type),
@@ -98,8 +93,7 @@ class _InputUrlWidgetState extends State<InputUrlWidget> {
     }
   }
 
-  Widget _getTextFieldBytType(bool isToolTip, int onDoneLastClicked,
-      int onCloseLastClicked, Map? selectionMap, BuildContext context) {
+  Widget _getTextFieldBytType(bool isToolTip, int onDoneLastClicked, int onCloseLastClicked, Map? selectionMap, BuildContext context) {
     return WebViewAware(
       child: Form(
         key: _formKey,
@@ -113,12 +107,9 @@ class _InputUrlWidgetState extends State<InputUrlWidget> {
                 ),
                 Flexible(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 4.0, vertical: 0),
+                    padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 0),
                     child: Container(
-                      decoration: BoxDecoration(
-                          color: HexColor.fromHex('#E7F0FE'),
-                          borderRadius: BorderRadius.circular(10)),
+                      decoration: BoxDecoration(color: HexColor.fromHex('#E7F0FE'), borderRadius: BorderRadius.circular(10)),
                       child: TextFormField(
                         minLines: 1,
                         onChanged: (v) {
@@ -152,13 +143,10 @@ class _InputUrlWidgetState extends State<InputUrlWidget> {
                     onDoneLastClicked = now;
                     if (_formKey.currentState!.validate()) {
                       if (selectionMap != null) {
-                        widget.controller.setSelectionRange(
-                            selectionMap['index'] ?? 0,
-                            selectionMap['length'] ?? 0);
+                        widget.controller.setSelectionRange(selectionMap['index'] ?? 0, selectionMap['length'] ?? 0);
                       }
 
-                      Future.delayed(const Duration(milliseconds: 10))
-                          .then((value) {
+                      Future.delayed(const Duration(milliseconds: 10)).then((value) {
                         widget.onSubmit(_inputValue ?? '');
                         if (isToolTip) {
                           _toolTipKey.currentState!.hideOverlay();
@@ -209,10 +197,7 @@ class _InputUrlWidgetState extends State<InputUrlWidget> {
   Widget _getIcon(UrlInputType type) {
     switch (type) {
       case UrlInputType.video:
-        return SizedBox(
-            height: 18,
-            width: 18,
-            child: Image.asset(ImageConstant.kiCameraRollPng));
+        return SizedBox(height: 18, width: 18, child: Image.asset(ImageConstant.kiCameraRollPng));
       case UrlInputType.hyperlink:
         return Icon(
           Icons.link,
