@@ -26,6 +26,7 @@ class PositionManager {
   /// [radius] border radius amount of the tooltip.
   final double radius;
 
+  /// Constructor
   PositionManager({
     required this.arrowBox,
     required this.triggerBox,
@@ -64,8 +65,7 @@ class PositionManager {
       arrow: ElementBox(
         w: arrowBox.w,
         h: arrowBox.h,
-        x: (triggerBox.x + _half(triggerBox.w) - _half(arrowBox.w))
-            .floorToDouble(),
+        x: (triggerBox.x + _half(triggerBox.w) - _half(arrowBox.w)).floorToDouble(),
         y: (triggerBox.y - distance - arrowBox.h).floorToDouble(),
       ),
       bubble: ElementBox(
@@ -132,8 +132,7 @@ class PositionManager {
       arrow: ElementBox(
         w: arrowBox.w,
         h: arrowBox.h,
-        x: (triggerBox.x + _half(triggerBox.w) - _half(arrowBox.w))
-            .ceilToDouble(),
+        x: (triggerBox.x + _half(triggerBox.w) - _half(arrowBox.w)).ceilToDouble(),
         y: (triggerBox.y + triggerBox.h + distance).ceilToDouble(),
       ),
       bubble: ElementBox(
@@ -176,8 +175,7 @@ class PositionManager {
       arrow: ElementBox(
         w: overlayBox.w,
         h: overlayBox.h,
-        x: (triggerBox.x - overlayBox.x - distance - arrowBox.h)
-            .floorToDouble(),
+        x: (triggerBox.x - overlayBox.x - distance - arrowBox.h).floorToDouble(),
         y: triggerBox.y + _half(triggerBox.h),
       ),
       bubble: ElementBox(
@@ -201,10 +199,8 @@ class PositionManager {
       arrow: ElementBox(
         w: overlayBox.w,
         h: overlayBox.h,
-        x: (triggerBox.x - overlayBox.x - distance - arrowBox.h)
-            .floorToDouble(),
-        y: (triggerBox.y + _half(triggerBox.h) - _half(arrowBox.w))
-            .floorToDouble(),
+        x: (triggerBox.x - overlayBox.x - distance - arrowBox.h).floorToDouble(),
+        y: (triggerBox.y + _half(triggerBox.h) - _half(arrowBox.w)).floorToDouble(),
       ),
       bubble: ElementBox(
         w: overlayBox.w,
@@ -222,8 +218,7 @@ class PositionManager {
       arrow: ElementBox(
         w: overlayBox.w,
         h: overlayBox.h,
-        x: (triggerBox.x - overlayBox.x - distance - arrowBox.h)
-            .floorToDouble(),
+        x: (triggerBox.x - overlayBox.x - distance - arrowBox.h).floorToDouble(),
         y: (triggerBox.y + _half(triggerBox.h) - arrowBox.w).floorToDouble(),
       ),
       bubble: ElementBox(
@@ -253,8 +248,7 @@ class PositionManager {
       bubble: ElementBox(
         w: overlayBox.w,
         h: overlayBox.h,
-        x: (triggerBox.x + triggerBox.w + distance + arrowBox.h)
-            .floorToDouble(),
+        x: (triggerBox.x + triggerBox.w + distance + arrowBox.h).floorToDouble(),
         y: (triggerBox.y + _half(triggerBox.h)).floorToDouble(),
       ),
       position: ElTooltipPosition.rightStart,
@@ -273,8 +267,7 @@ class PositionManager {
         w: overlayBox.w,
         h: overlayBox.h,
         x: (triggerBox.x + triggerBox.w + distance).floorToDouble(),
-        y: (triggerBox.y + _half(triggerBox.h) - _half(arrowBox.w))
-            .floorToDouble(),
+        y: (triggerBox.y + _half(triggerBox.h) - _half(arrowBox.w)).floorToDouble(),
       ),
       bubble: ElementBox(
         w: overlayBox.w,
@@ -316,10 +309,7 @@ class PositionManager {
   }
 
   bool _fitsScreen(ToolTipElementsDisplay el) {
-    if (el.bubble.x > 0 &&
-        el.bubble.x + el.bubble.w < screenSize.w &&
-        el.bubble.y > 0 &&
-        el.bubble.y + el.bubble.h < screenSize.h) {
+    if (el.bubble.x > 0 && el.bubble.x + el.bubble.w < screenSize.w && el.bubble.y > 0 && el.bubble.y + el.bubble.h < screenSize.h) {
       return true;
     }
     return false;
@@ -393,8 +383,6 @@ class PositionManager {
         break;
     }
 
-    return _fitsScreen(elementPosition)
-        ? elementPosition
-        : _firstAvailablePosition();
+    return _fitsScreen(elementPosition) ? elementPosition : _firstAvailablePosition();
   }
 }

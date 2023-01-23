@@ -29,7 +29,7 @@ class ImageSelector {
         allowedExtensions: (_extension?.isNotEmpty ?? false) ? _extension?.replaceAll(' ', '').split(',') : null,
       ))
           ?.files;
-      print(_paths);
+      // print(_paths);
       if (_paths != null && _paths!.isNotEmpty) {
         Uint8List? bytes;
         if (kIsWeb) {

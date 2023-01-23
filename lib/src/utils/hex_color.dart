@@ -16,6 +16,6 @@ class HexColor extends Color {
 
 ///[ToHex] extension method to convert Color to hex code
 extension ToHex on Color {
-  String toHex() =>
-      '#${(value & 0xFFFFFF).toRadixString(16).padLeft(6, '0').toUpperCase()}';
+  ///[ToHex] extension method to convert Color to hex code
+  String toHex() => '#${(value & 0xFFFFFF).toRadixString(16).padLeft(6, '0').toUpperCase()}';
 }
